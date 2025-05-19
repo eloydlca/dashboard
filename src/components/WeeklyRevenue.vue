@@ -17,12 +17,11 @@
 import { ref } from 'vue'
 import VueApexCharts from 'vue3-apexcharts'
 
-// registrar alias para template
 const ApexChart = VueApexCharts
 
 const series = ref([{ 
   name: 'Ingresos (€)', 
-  data: [12000, 13500, 11000, 15000, 17000, 16000, 17500] 
+  data: [3000, 3375, 2750, 3750, 4250, 4000, 4375] 
 }])
 
 const options = ref({
@@ -30,12 +29,12 @@ const options = ref({
     toolbar: { show: false },
     background: 'transparent',
     fontFamily: 'inherit',
-    height: 350 // Altura explícita para el gráfico
+    height: 350 
   },
   plotOptions: {
     bar: {
       borderRadius: 6,
-      columnWidth: '50%', // Reducido de 60% para barras más delgadas
+      columnWidth: '50%', 
       distributed: false,
       dataLabels: {
         position: 'top'
@@ -43,7 +42,7 @@ const options = ref({
     }
   },
   dataLabels: {
-    enabled: true, // Activar etiquetas de datos
+    enabled: true, 
     formatter: (val) => `${(val/1000).toFixed(1)}K€`,
     offsetY: -20,
     style: {
@@ -58,7 +57,7 @@ const options = ref({
         colors: '#A9DBB5',
         fontSize: '12px'
       },
-      rotate: -45, // Rotar etiquetas para mejor legibilidad
+      rotate: -45, 
       offsetY: 5
     },
     axisBorder: {
@@ -70,15 +69,15 @@ const options = ref({
   },
   yaxis: {
     labels: {
-      formatter: (value) => `${(value/1000).toFixed(0)}K€`, // Formato más compacto
+      formatter: (value) => `${(value/1000).toFixed(0)}K€`, 
       style: {
         colors: '#A9DBB5',
         fontSize: '12px'
       }
     },
     min: 0,
-    max: 20000, // Establecer un máximo para mejor escala
-    tickAmount: 5 // Número de ticks en el eje Y
+    max: 5000, 
+    tickAmount: 5 
   },
   grid: {
     borderColor: 'rgba(169, 219, 181, 0.1)',
@@ -158,12 +157,12 @@ const options = ref({
 .chart-content {
   flex: 1;
   position: relative;
-  min-height: 250px; /* Altura mínima para evitar que se achate */
+  min-height: 250px; 
 }
 
 @media (min-width: 992px) {
   .chart-content {
-    min-height: 300px; /* Mayor altura en pantallas grandes */
+    min-height: 300px; 
   }
 }
 </style>

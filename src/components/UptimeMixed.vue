@@ -5,7 +5,7 @@
         <h2 class="chart-title">Uptime de Servidores</h2>
         <p class="chart-subtitle">Comparativa de porcentaje de uptime y número de incidencias semanales</p>
       </div>
-      <div class="chart-badge">+0.15%</div>
+      <div class="chart-badge">+0.02%</div>
     </div>
     <div class="chart-content">
       <apexchart
@@ -22,17 +22,16 @@
 import { ref } from 'vue';
 import VueApexCharts from 'vue3-apexcharts';
 
-// Series de datos: uptime (%) en columnas y número de incidencias en línea
 const series = ref([
   {
     name: 'Uptime (%)',
     type: 'column',
-    data: [99.7, 99.9, 99.8, 99.85, 99.9, 99.95, 99.8]
+    data: [99.6, 99.8, 99.95, 99.88, 99.96, 99.97, 99.99]
   },
   {
     name: 'Incidencias',
     type: 'line',
-    data: [2, 1, 3, 1, 0, 0, 1]
+    data: [5, 9, 3, 6, 2, 1, 0]
   }
 ]);
 
@@ -71,7 +70,7 @@ const chartOptions = ref({
       },
       labels: { style: { colors: '#A9DBB5' } },
       min: 0,
-      max: 5
+      max: 10
     }
   ],
   grid: {

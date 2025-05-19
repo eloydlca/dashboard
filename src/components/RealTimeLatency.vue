@@ -104,7 +104,6 @@
   let intervalId;
   
   onMounted(() => {
-    // Emitir el valor inicial
     emit('update-latency', series.value[0].data[series.value[0].data.length - 1]);
     
     intervalId = setInterval(() => {
@@ -185,7 +184,7 @@
   
   .chart-content {
     flex: 1;
-    min-height: 0; /* Crucial para que el gráfico se ajuste al contenedor */
+    min-height: 0; 
     position: relative;
   }
   </style>

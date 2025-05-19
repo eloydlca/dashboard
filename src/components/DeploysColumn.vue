@@ -3,9 +3,9 @@
       <div class="chart-header">
         <div>
           <h2 class="chart-title">Deploys Exitosos</h2>
-          <p class="chart-subtitle">Últimos 6 meses</p>
+          <p class="chart-subtitle">Últimos 7 meses</p>
         </div>
-        <div class="chart-badge">+25%</div>
+        <div class="chart-badge">-30%</div>
       </div>
       <div class="chart-content">
         <canvas ref="chartRef"></canvas>
@@ -26,10 +26,10 @@
       chartInstance = new Chart(chartRef.value.getContext('2d'), {
         type: 'bar',
         data: {
-          labels: ['Ene','Feb','Mar','Abr','May','Jun'],
+          labels: ['Ene','Feb','Mar','Abr','May','Jun', 'Jul'],
           datasets: [{
             label: 'Deploys',
-            data: [5, 7, 6, 9, 8, 10],
+            data: [5, 7, 6, 9, 8, 10, 7],
             backgroundColor: 'rgba(123, 208, 141, 0.7)',
             borderColor: 'rgba(123, 208, 141, 1)',
             borderWidth: 1,
@@ -98,8 +98,8 @@
       color: rgba(169, 219, 181, 0.7);
     }
     .chart-badge {
-      background: rgba(123, 208, 141, 0.2);
-      color: #7BD08D;
+      background: rgb(171, 79, 73);
+      color: #cfe2cc;
       padding: 4px 8px;
       border-radius: 16px;
       font-size: 12px;

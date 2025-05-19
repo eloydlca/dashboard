@@ -5,7 +5,7 @@
         <h2 class="chart-title">Errores 500</h2>
         <p class="chart-subtitle">Scatter Plot de errores por día</p>
       </div>
-      <div class="chart-badge">-33%</div>
+      <div class="chart-badge">-100%</div>
     </div>
     <div class="chart-content">
       <canvas ref="chartRef"></canvas>

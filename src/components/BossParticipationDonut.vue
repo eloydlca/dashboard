@@ -2,8 +2,8 @@
   <div class="chart-wrapper">
     <div class="chart-header">
       <div>
-        <h2 class="chart-title">Participación en Boss</h2>
-        <p class="chart-subtitle">Distribución entre jugadores</p>
+        <h2 class="chart-title">Participación en Boss Semanal</h2>
+        <p class="chart-subtitle">Distribución de jugadores por clanes</p>
       </div>
     </div>
     <div class="chart-content">
@@ -22,7 +22,6 @@ import { CanvasRenderer } from 'echarts/renderers'
 
 use([PieChart, TooltipComponent, LegendComponent, CanvasRenderer])
 
-// Paleta de colores Adventask
 const colors = ['#7BD08D', '#A9DBB5', '#5AB06C', '#3D9A4E', '#2C8A3D'];
 
 const option = ref({
@@ -49,15 +48,14 @@ const option = ref({
     itemHeight: 15,
     icon: 'circle',
     formatter: name => {
-      // Acortar el texto si es necesario
       return name.length > 10 ? name.slice(0, 10) + '...' : name;
     }
   },
   series: [{
     name: 'Participación',
     type: 'pie',
-    center: ['65%', '50%'], // Mover el centro del gráfico a la derecha
-    radius: ['45%', '75%'], // Aumentar el tamaño del donut
+    center: ['65%', '50%'], 
+    radius: ['45%', '75%'], 
     avoidLabelOverlap: false,
     itemStyle: { 
       borderRadius: 10, 
@@ -81,11 +79,11 @@ const option = ref({
       }
     },
     data: [
-      { value: 1048, name: 'Clan A', itemStyle: { color: colors[0] } },
-      { value: 735, name: 'Clan B', itemStyle: { color: colors[1] } },
-      { value: 580, name: 'Clan C', itemStyle: { color: colors[2] } },
-      { value: 484, name: 'Clan D', itemStyle: { color: colors[3] } },
-      { value: 300, name: 'Otros', itemStyle: { color: colors[4] } }
+      { value: 262, name: 'Clan A', itemStyle: { color: colors[0] } },
+      { value: 184, name: 'Clan B', itemStyle: { color: colors[1] } },
+      { value: 145, name: 'Clan C', itemStyle: { color: colors[2] } },
+      { value: 121, name: 'Clan D', itemStyle: { color: colors[3] } },
+      { value: 75, name: 'Otros', itemStyle: { color: colors[4] } }
     ]
   }]
 })
@@ -122,12 +120,12 @@ const option = ref({
 .chart-content {
   flex: 1;
   position: relative;
-  min-height: 250px; /* Altura mínima para evitar que se achate */
+  min-height: 250px; 
 }
 
 @media (min-width: 992px) {
   .chart-content {
-    min-height: 300px; /* Mayor altura en pantallas grandes */
+    min-height: 300px; 
   }
 }
 </style>

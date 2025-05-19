@@ -140,67 +140,67 @@ interface SmartGoal {
 const businessGoals = ref<SmartGoal[]>([
   {
     id: 1,
-    title: 'DAU / MAU Ratio',
+    title: 'MAU (Monthly Active Users)',
     description:
-      'Aumentar la ratio de usuarios activos diarios vs. mensuales para mejorar el engagement.',
+      'Engagement promedio diario basado en usuarios mensuales. Ratio actual 27%, con objetivo al 35% desde enero hasta julio.',
     smart: [
-      { letter: 'S', content: 'Incrementar la ratio DAU/MAU del 20% actual al 35%.' },
-      { letter: 'M', content: 'Medido como DAU ÷ MAU mensual.' },
-      { letter: 'A', content: 'Enviando notificaciones push y recompensas diarias.' },
-      { letter: 'R', content: 'Favorece la retención y uso diario de Adventask.' },
+      { letter: 'S', content: 'Incrementar ratio MAU del 27% al 35%.' },
+      { letter: 'M', content: 'Cálculo: DAU medio diario ÷ MAU mensual.' },
+      { letter: 'A', content: 'Impulsar campañas in-app y recordatorios diarios.' },
+      { letter: 'R', content: 'Aumenta fidelidad del usuario.' },
       { letter: 'T', content: 'En los próximos 2 meses.' }
     ]
   },
   {
     id: 2,
-    title: 'Jugadores Activos',
+    title: 'Jugadores Activos (DAU)',
     description:
-      'Incrementar el número de usuarios activos diarios en la aplicación para mejorar el engagement y retención.',
+      'Usuarios activos diarios, media actual entre 650 y 750. Objetivo: aumentar un 15% (≈1000 DAU).',
     smart: [
-      { letter: 'S', content: 'Aumentar los DAU de 500 actuales a 800.' },
-      { letter: 'M', content: 'Contabilizado por usuarios que inician sesión al menos una vez al día.' },
-      { letter: 'A', content: 'Implementando notificaciones personalizadas y recompensas de login diario.' },
-      { letter: 'R', content: 'Clave para el crecimiento de la comunidad y retención.' },
-      { letter: 'T', content: 'En los próximos 4 semanas.' }
+      { letter: 'S', content: 'Pasar de 700 DAU actuales a 1000 DAU.' },
+      { letter: 'M', content: 'Media diaria de inicios de sesión.' },
+      { letter: 'A', content: 'Implementar notificaciones personalizadas.' },
+      { letter: 'R', content: 'Clave para crecimiento y retención.' },
+      { letter: 'T', content: 'En 4 semanas.' }
     ]
   },
   {
     id: 3,
-    title: 'Retención semanal',
+    title: 'Retención Semanal por Clan',
     description:
-      'Mejorar la retención de usuarios una semana después de registrarse.',
+      'Comparativa de retención semanal entre Clan A, B, C, D y Otros. Los clanes más grandes presentan mayor retención.',
     smart: [
-      { letter: 'S', content: 'Subir la retención post-registro del 25% al 50%.' },
-      { letter: 'M', content: 'Cohorte de registros vs. usuarios la semana siguiente.' },
-      { letter: 'A', content: 'Implementando tutorial in-app y misiones de bienvenida.' },
-      { letter: 'R', content: 'Disminuye el abandono temprano de la app.' },
-      { letter: 'T', content: 'En las próximas 8 semanas.' }
+      { letter: 'S', content: 'Mejorar retención clan A a 7 días activos.' },
+      { letter: 'M', content: 'Heatmap semanal de Días Activos.' },
+      { letter: 'A', content: 'Incentivar con recompensas por clan.' },
+      { letter: 'R', content: 'Fomenta competencia sana.' },
+      { letter: 'T', content: 'Continuo cada semana.' }
     ]
   },
   {
     id: 4,
-    title: 'Participación en el boss semanal',
+    title: 'Participación en Boss Semanal',
     description:
-      'Incrementar el porcentaje de jugadores que participan en la lucha de comunidad.',
+      'Porcentaje de miembros por clan que participan en el Boss semanal. Actualmente la mayoría de cada clan juega.',
     smart: [
-      { letter: 'S', content: 'Pasar del 40% actual al 70% de participación.' },
-      { letter: 'M', content: '% de MAU que juegan al boss semanal.' },
-      { letter: 'A', content: 'Ofreciendo loot exclusivo y XP extra.' },
-      { letter: 'R', content: 'Refuerza el aspecto social y cooperativo.' },
-      { letter: 'T', content: 'En las próximas 4 semanas.' }
+      { letter: 'S', content: 'Mantener participación ≥ 85% por clan.' },
+      { letter: 'M', content: 'Conteo de participaciones vs. miembros.' },
+      { letter: 'A', content: 'Ofrecer loot exclusivo.' },
+      { letter: 'R', content: 'Refuerza interacción comunitaria.' },
+      { letter: 'T', content: 'En 4 semanas.' }
     ]
   },
   {
     id: 5,
-    title: 'Ingresos semanales',
+    title: 'Ingresos Semanales',
     description:
-      'Mantener y analizar los ingresos totales semanales generados por la tienda.',
+      'Gasto medio semanal por usuario: 4–5€. Objetivo: duplicar gasto semanal (8–10€/usuario).',
     smart: [
-      { letter: 'S', content: 'Alcanzar 10 000 € de ingresos semanales.' },
-      { letter: 'M', content: 'Sumatorio de ventas in-app cada semana.' },
-      { letter: 'A', content: 'Lanzando eventos temporales de oferta.' },
-      { letter: 'R', content: 'Garantiza viabilidad y reinversión.' },
-      { letter: 'T', content: 'Antes de finalizar el próximo mes.' }
+      { letter: 'S', content: 'Incrementar gasto de 5€ a 10€ por usuario/semana.' },
+      { letter: 'M', content: 'Promedio de ingresos in-app semanales.' },
+      { letter: 'A', content: 'Ofertas flash y eventos de venta.' },
+      { letter: 'R', content: 'Mejora monetización sostenible.' },
+      { letter: 'T', content: 'En 6 semanas.' }
     ]
   }
 ]);
@@ -209,89 +209,82 @@ const businessGoals = ref<SmartGoal[]>([
 const techGoals = ref<SmartGoal[]>([
   {
     id: 1,
-    title: 'Latencia media API',
+    title: 'Latencia Media API',
     description:
-      'Reducir la latencia de respuesta de los endpoints de tareas y perfil.',
+      'Reducir variabilidad de 100–250 ms a 80–150 ms para endpoints críticos.',
     smart: [
-      { letter: 'S', content: 'Bajar latencia media de 250 ms a 150 ms.' },
-      { letter: 'M', content: 'Medida diaria con herramientas APM.' },
-      { letter: 'A', content: 'Optimizando consultas y cachés.' },
-      { letter: 'R', content: 'Mejora UX y disminuye time-outs.' },
-      { letter: 'T', content: 'En los próximos 30 días.' }
+      { letter: 'S', content: 'Estabilizar latencia entre 80 y 150 ms.' },
+      { letter: 'M', content: 'Media diaria con APM.' },
+      { letter: 'A', content: 'Optimizar consultas y cachés.' },
+      { letter: 'R', content: 'Mejora experiencia usuario.' },
+      { letter: 'T', content: 'En 30 días.' }
     ]
   },
   {
     id: 2,
-    title: 'Uptime de servidores',
+    title: 'Uptime de Servidores',
     description:
-      'Garantizar alta disponibilidad con SLA de hasta 99,9%.',
+      'Mantener disponibilidad semanal en 99.99% (actual 99.84%).',
     smart: [
-      { letter: 'S', content: 'Alcanzar uptime ≥ 99,9%.' },
-      { letter: 'M', content: 'Monitorizado con health-checks externos.' },
-      { letter: 'A', content: 'Implementando auto-scaling y redundancia.' },
-      { letter: 'R', content: 'Evita interrupciones en eventos semanales.' },
-      { letter: 'T', content: 'En el próximo trimestre.' }
+      { letter: 'S', content: 'Lograr uptime ≥ 99.99%.' },
+      { letter: 'M', content: 'Monitorizado semanalmente.' },
+      { letter: 'A', content: 'Auto-scaling y redundancia.' },
+      { letter: 'R', content: 'Garantiza servicio continuo.' },
+      { letter: 'T', content: 'Continuo.' }
     ]
   },
   {
     id: 3,
-    title: 'Errores 500 diarios',
+    title: 'Errores 500 Diarios',
     description:
-      'Reducir los errores internos de servidor en los logs.',
+      'Reducir promedio semanal de 7 errores a 0–2.',
     smart: [
-      { letter: 'S', content: 'Bajar errores 500 de 20 a < 5 diarios.' },
-      { letter: 'M', content: 'Recuento automático en el sistema de logs.' },
-      { letter: 'A', content: 'Mejorando validaciones y capturas de excepción.' },
-      { letter: 'R', content: 'Incrementa fiabilidad del backend.' },
-      { letter: 'T', content: 'En los próximos 60 días.' }
+      { letter: 'S', content: 'Bajar errores semanales a ≤ 2.' },
+      { letter: 'M', content: 'Conteo en logs semanal.' },
+      { letter: 'A', content: 'Mejorar validaciones y capturas.' },
+      { letter: 'R', content: 'Incrementa fiabilidad.' },
+      { letter: 'T', content: 'En 60 días.' }
     ]
   },
   {
     id: 4,
-    title: 'Uso de CPU promedio',
+    title: 'Uso CPU Promedio',
     description:
-      'Mantener nivel óptimo de uso de CPU en horas punta.',
+      'Reducir rango de uso de CPU de 30–70% a 20–60%.',
     smart: [
-      { letter: 'S', content: 'Mantener CPU < 60% en peak.' },
-      { letter: 'M', content: 'Media horaria registrada por servidor.' },
-      { letter: 'A', content: 'Ajustar JVM y réplicas.' },
-      { letter: 'R', content: 'Evita cuellos de botella.' },
-      { letter: 'T', content: 'Revisión semanal continua.' }
+      { letter: 'S', content: 'Mantener CPU entre 20% y 60%.' },
+      { letter: 'M', content: 'Registro horario.' },
+      { letter: 'A', content: 'Ajuste de JVM y réplicas.' },
+      { letter: 'R', content: 'Evita saturaciones.' },
+      { letter: 'T', content: 'Revisión continua.' }
     ]
   },
   {
     id: 5,
-    title: 'Deploys exitosos mensuales',
+    title: 'Deploys Exitosos Mensuales',
     description:
-      'Asegurar frecuencia y calidad de despliegues a producción.',
+      'Incrementar lanzamientos mensuales de 7 a 10–12.',
     smart: [
-      { letter: 'S', content: 'Al menos 4 despliegues sin rollback al mes.' },
-      { letter: 'M', content: 'Conteo en CI/CD pipelines.' },
-      { letter: 'A', content: 'Automatizando tests y validaciones.' },
-      { letter: 'R', content: 'Agiliza la entrega de features.' },
-      { letter: 'T', content: 'Cada mes, sin excepciones.' }
+      { letter: 'S', content: 'Pasar de 7 a 12 deploys mensuales.' },
+      { letter: 'M', content: 'Conteo en CI/CD.' },
+      { letter: 'A', content: 'Automatizar pipelines.' },
+      { letter: 'R', content: 'Mejora ciclo de entrega.' },
+      { letter: 'T', content: 'En próximos 3 meses.' }
     ]
   }
 ]);
 
-// Estado para las pestañas y elementos expandidos
 const activeTab = ref('business');
 const expandedItems = ref<number[]>([]);
-
-// Función para alternar la expansión de un elemento
 const toggleExpand = (item: SmartGoal) => {
-  if (expandedItems.value.includes(item.id)) {
-    expandedItems.value = expandedItems.value.filter(id => id !== item.id);
-  } else {
-    expandedItems.value.push(item.id);
-  }
+  const idx = expandedItems.value.indexOf(item.id);
+  if (idx > -1) expandedItems.value.splice(idx, 1);
+  else expandedItems.value.push(item.id);
 };
 
-// Función para generar un progreso aleatorio pero consistente para cada KPI
-const progressMap = new Map();
+const progressMap = new Map<number, number>();
 const getRandomProgress = (id: number) => {
   if (!progressMap.has(id)) {
-    // Generar un valor entre 25 y 95
     progressMap.set(id, Math.floor(Math.random() * 70) + 25);
   }
   return progressMap.get(id);

@@ -91,7 +91,7 @@
   
   <style scoped>
   .box-sparkline {
-    position: relative;           /* contenedor relativo */
+    position: relative;          
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -104,7 +104,7 @@
     position: absolute;
     top: 1; left: 0; right: 0; bottom: 0;
     z-index: 1;
-    opacity: 0.2;                 /* ajusta opacidad para no tapar el texto */
+    opacity: 0.2;                 
   }
   .sparkline-chart {
     width: 100%;

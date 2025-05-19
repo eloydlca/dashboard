@@ -120,11 +120,10 @@
   let intervalId
   onMounted(() => {
     intervalId = setInterval(() => {
-      const next = Math.floor(Math.random() * 100) + 450  // 450–550
+      const next = Math.floor(Math.random() * 100) + 450 
       series.value[0].data.push(next)
       series.value[0].data.shift()
       
-      // Emitir el valor actual para actualizar el KPI
       emit('update-players', next)
     }, 5000)
   })
