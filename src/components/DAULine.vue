@@ -64,6 +64,14 @@ onMounted(() => {
     options: {
       responsive: true,
       maintainAspectRatio: false,
+      layout: {
+        padding: {
+          top: 20,    // Añadir padding superior
+          bottom: 10, // Añadir padding inferior
+          left: 10,   // Añadir padding izquierdo
+          right: 10   // Añadir padding derecho
+        }
+      },
       scales: {
         x: {
           type: 'category',
@@ -74,10 +82,11 @@ onMounted(() => {
         y: {
           beginAtZero: true,
           min: 0,
-          max: 0.35,
+          max: 0.40, // Aumentado de 0.35 a 0.40 para dar más espacio a las burbujas
           ticks: {
             callback: v => `${(v * 100).toFixed(0)}%`,
-            color: '#A9DBB5'
+            color: '#A9DBB5',
+            stepSize: 0.10 // Definir pasos de 10% para mejor legibilidad
           },
           grid: { color: 'rgba(169, 219, 181, 0.1)' }
         }
@@ -144,5 +153,12 @@ onBeforeUnmount(() => {
 .chart-content {
   flex: 1;
   position: relative;
+  min-height: 250px; /* Altura mínima para evitar que se achate */
+}
+
+@media (min-width: 992px) {
+  .chart-content {
+    min-height: 300px; /* Mayor altura en pantallas grandes */
+  }
 }
 </style>

@@ -1,3 +1,5 @@
+<!-- pages/TecnicoPage.vue -->
+
 <template>
   <ion-page>
     <ion-header :translucent="true">
@@ -8,58 +10,103 @@
         <ion-title>📈 Dashboard Técnico</ion-title>
       </ion-toolbar>
     </ion-header>
-  
+
     <ion-content class="dashboard-content">
       <div class="dashboard-container">
         <!-- Layout principal con grid asimétrico -->
         <div class="main-grid">
-          <!-- Panel izquierdo: KPIs y gráfico de latencia -->
+          <!-- Panel izquierdo: KPIs y latencia -->
           <div class="left-panel">
-            <!-- KPIs en formato vertical -->
+            <!-- KPIs en formato vertical con spark-lines -->
             <div class="kpi-column">
+              <!-- Latencia Actual -->
               <div class="kpi-card">
-                <div class="kpi-icon">⏱️</div>
-                <div class="kpi-content">
-                  <div class="kpi-value">{{ currentLatency }}ms</div>
-                  <div class="kpi-label">Latencia Actual</div>
-                </div>
+                <spark-line
+                  title="LATENCIA"
+                  :value="currentLatency + 'ms'"
+                  :chartOptions="sparkLatencyOptions"
+                  :chartSeries="sparkLatencySeries"
+                  bgColor="rgba(0,44,27,0.7)"
+                  textColor="#7BD08D"
+                  iconName="navigate-outline"
+                  padding="20px"
+                  iconSize="1.2rem"
+                  titleFontSize="0.7rem"
+                  valueFontSize="1.8rem"
+                  detailsGap="4px"
+                  iconTitleGap="3px"
+                />
               </div>
+              <!-- Uptime Servidores -->
               <div class="kpi-card">
-                <div class="kpi-icon">🔄</div>
-                <div class="kpi-content">
-                  <div class="kpi-value">99.9%</div>
-                  <div class="kpi-label">Uptime Servidores</div>
-                </div>
+                <spark-line
+                  title="UPTIME"
+                  value="99.9%"
+                  :chartOptions="sparkUptimeOptions"
+                  :chartSeries="sparkUptimeSeries"
+                  bgColor="rgba(0,44,27,0.7)"
+                  textColor="#A9DBB5"
+                  iconName="logo-ionic"
+                  padding="20px"
+                  iconSize="1.2rem"
+                  titleFontSize="0.7rem"
+                  valueFontSize="1.8rem"
+                  detailsGap="4px"
+                  iconTitleGap="3px"
+                />
               </div>
+              <!-- Errores 500 Hoy -->
               <div class="kpi-card">
-                <div class="kpi-icon">⚠️</div>
-                <div class="kpi-content">
-                  <div class="kpi-value">3</div>
-                  <div class="kpi-label">Errores 500 Hoy</div>
-                </div>
+                <spark-line
+                  title="ERRORS 500"
+                  value="3"
+                  :chartOptions="sparkErrorsOptions"
+                  :chartSeries="sparkErrorsSeries"
+                  bgColor="rgba(0,44,27,0.7)"
+                  textColor="#EE9AE5"
+                  iconName="warning-outline"
+                  padding="20px"
+                  iconSize="1.2rem"
+                  titleFontSize="0.7rem"
+                  valueFontSize="1.8rem"
+                  detailsGap="4px"
+                  iconTitleGap="3px"
+                />
               </div>
+              <!-- Deploys Exitosos -->
               <div class="kpi-card">
-                <div class="kpi-icon">🚀</div>
-                <div class="kpi-content">
-                  <div class="kpi-value">10</div>
-                  <div class="kpi-label">Deploys Exitosos</div>
-                </div>
+                <spark-line
+                  title="DEPLOYS"
+                  value="10"
+                  :chartOptions="sparkDeploysOptions"
+                  :chartSeries="sparkDeploysSeries"
+                  bgColor="rgba(0,44,27,0.7)"
+                  textColor="#EE9AE5"
+                  iconName="rocket-outline"
+                  padding="20px"
+                  iconSize="1.2rem"
+                  titleFontSize="0.7rem"
+                  valueFontSize="1.8rem"
+                  detailsGap="4px"
+                  iconTitleGap="3px"
+                />
               </div>
             </div>
-            
-            <!-- Gráfico de latencia en tiempo real -->
-            <div class="latency-chart">
-              <RealTimeLatency @update-latency="updateCurrentLatency" />
+
+            <!-- Gráfico de CPU usage (cambiado de posición) -->
+            <div class="cpu-gauge-container">
+              <CPUUsageGauge />
             </div>
           </div>
-          
+
           <!-- Panel derecho: Grid de gráficos 2x2 -->
           <div class="right-panel">
             <div class="chart-card errors-chart">
               <APIErrorsScatter />
             </div>
-            <div class="chart-card cpu-chart">
-              <CPUUsageGauge />
+            <!-- Gráfico de latencia en tiempo real (cambiado de posición) -->
+            <div class="chart-card latency-chart">
+              <RealTimeLatency @update-latency="updateCurrentLatency" />
             </div>
             <div class="chart-card spend-chart">
               <UptimeMixed />
@@ -73,212 +120,350 @@
     </ion-content>
   </ion-page>
 </template>
-  
+
 <script setup lang="ts">
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
-import { ref, onMounted } from 'vue';
-import APIErrorsScatter from '@/components/APIErrorsScatter.vue';
-import UptimeMixed from '@/components/UptimeMixed.vue';
-import CPUUsageGauge from '@/components/CPUUsageGauge.vue';
-import DeploysColumn from '@/components/DeploysColumn.vue';
-import RealTimeLatency from '@/components/RealTimeLatency.vue';
+import {
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonMenuButton,
+  IonPage,
+  IonTitle,
+  IonToolbar
+} from '@ionic/vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 
-const currentLatency = ref(190);
+import APIErrorsScatter from '@/components/APIErrorsScatter.vue'
+import UptimeMixed from '@/components/UptimeMixed.vue'
+import CPUUsageGauge from '@/components/CPUUsageGauge.vue'
+import DeploysColumn from '@/components/DeploysColumn.vue'
+import RealTimeLatency from '@/components/RealTimeLatency.vue'
+import SparkLine from '@/components/SparkLine.vue'
 
-const updateCurrentLatency = (latency: number) => {
-  currentLatency.value = latency;
-};
+// Estado Latencia
+const currentLatency = ref(190)
 
-// Calcular altura disponible al montar el componente
+// Sparkline Latencia
+const sparkLatencyOptions = ref({
+  chart: { id: 'lat', type: 'area', sparkline: { enabled: true } },
+  stroke: { curve: 'smooth', width: 2 },
+  colors: ['#7BD08D'],
+  tooltip: { theme: 'dark', x: { show: false } }
+})
+const sparkLatencySeries = ref([{ data: [200, 180, 195, 190, 185, 192, 190] }])
+
+// Sparkline Uptime
+const sparkUptimeOptions = ref({
+  chart: { id: 'up', type: 'area', sparkline: { enabled: true } },
+  stroke: { curve: 'smooth', width: 2 },
+  colors: ['#A9DBB5'],
+  tooltip: { theme: 'dark', x: { show: false } }
+})
+const sparkUptimeSeries = ref([{ data: [99.8, 99.9, 100, 99.9, 99.95, 99.9, 99.9] }])
+
+// Sparkline Errores
+const sparkErrorsOptions = ref({
+  chart: { id: 'err', type: 'area', sparkline: { enabled: true } },
+  stroke: { curve: 'smooth', width: 2 },
+  colors: ['#EE9AE5'],
+  tooltip: { theme: 'dark', x: { show: false } }
+})
+const sparkErrorsSeries = ref([{ data: [5, 3, 4, 2, 3, 1, 3] }])
+
+// Sparkline Deploys
+const sparkDeploysOptions = ref({
+  chart: { id: 'dep', type: 'area', sparkline: { enabled: true } },
+  stroke: { curve: 'smooth', width: 2 },
+  colors: ['#EE9AE5'],
+  tooltip: { theme: 'dark', x: { show: false } }
+})
+const sparkDeploysSeries = ref([{ data: [8, 9, 10, 11, 10, 12, 10] }])
+
+// Actualizar Latencia
+function updateCurrentLatency(latency: number) {
+  currentLatency.value = latency
+  sparkLatencySeries.value = [{ data: [...sparkLatencySeries.value[0].data.slice(1), latency] }]
+}
+
+// Ajuste de altura
+let resizeObserver = null;
+
 onMounted(() => {
-  // Ajustar tamaño en caso necesario
-  adjustDashboardSize();
+  const adjustHeight = () => {
+    // En dispositivos móviles, no forzamos una altura específica para permitir scroll
+    if (window.innerWidth <= 768) {
+      const container = document.querySelector('.dashboard-container');
+      if (container) {
+        container.style.height = 'auto';
+      }
+      return;
+    }
+    
+    // En pantallas grandes, ajustamos la altura para evitar scroll
+    const header = document.querySelector('ion-header');
+    const headerHeight = header ? header.offsetHeight : 56;
+    const windowHeight = window.innerHeight;
+    const container = document.querySelector('.dashboard-container');
+    
+    if (container) {
+      container.style.height = `${windowHeight - headerHeight}px`;
+    }
+  };
   
-  // Volver a ajustar si cambia el tamaño de la ventana
-  window.addEventListener('resize', adjustDashboardSize);
-});
-
-// Función para ajustar el tamaño del dashboard
-const adjustDashboardSize = () => {
-  const header = document.querySelector('ion-header');
-  const headerHeight = header ? header.clientHeight : 56; // Altura por defecto si no se encuentra
+  // Ajuste inicial
+  adjustHeight();
   
+  // Usar ResizeObserver para detectar cambios en el tamaño
+  resizeObserver = new ResizeObserver(adjustHeight);
   const container = document.querySelector('.dashboard-container');
   if (container) {
-    const viewportHeight = window.innerHeight;
-    const availableHeight = viewportHeight - headerHeight;
-    container.style.height = `${availableHeight}px`;
+    resizeObserver.observe(container);
   }
-};
-</script>
   
+  // Backup con event listener
+  window.addEventListener('resize', adjustHeight);
+});
+
+onBeforeUnmount(() => {
+  if (resizeObserver) {
+    resizeObserver.disconnect();
+  }
+  window.removeEventListener('resize', () => {});
+});
+</script>
+
 <style scoped>
-.toolbar {
-  --background: #002C1B;
-  --color: white;
+.toolbar { 
+  --background: #002C1B; 
+  --color: white; 
 }
 
 .dashboard-content {
   --background: #001B11;
-  --padding-top: 0;
+  --padding-top: 0; 
   --padding-bottom: 0;
-  --padding-start: 0;
+  --padding-start: 0; 
   --padding-end: 0;
-  overflow: hidden;
 }
 
 .dashboard-container {
-  box-sizing: border-box;
-  padding: 10px;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
+  padding: 16px;
+  width: 100%;
 }
 
-/* Layout principal con grid asimétrico */
+/* Grid asimétrico */
 .main-grid {
   display: grid;
   grid-template-columns: 280px 1fr;
-  gap: 10px;
+  gap: 16px;
+  width: 100%;
   height: 100%;
-  min-height: 0; /* Importante para que el grid respete la altura del contenedor */
 }
 
-/* Panel izquierdo con KPIs y gráfico de latencia */
+/* Izquierda */
 .left-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
+  display: flex; 
+  flex-direction: column; 
+  gap: 16px;
   height: 100%;
-  min-height: 0; /* Importante para que flex respete la altura */
 }
 
 .kpi-column {
-  display: flex;
-  flex-direction: column;
+  display: flex; 
+  flex-direction: column; 
   gap: 8px;
-  flex: 0 0 auto;
+  height: 50%; /* Ocupar exactamente la mitad del panel izquierdo */
 }
 
 .kpi-card {
-  background: rgba(0, 44, 27, 0.7);
+  background: transparent;
   border-radius: 10px;
-  padding: 8px 10px;
-  display: flex;
-  align-items: center;
-  border: 1px solid rgba(169, 219, 181, 0.2);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  overflow: hidden;
+  flex: 1; /* Distribuir el espacio equitativamente */
+  min-height: 80px; /* Altura mínima para evitar que se achaten */
 }
 
-.kpi-icon {
-  font-size: 18px;
-  margin-right: 10px;
-}
-
-.kpi-content {
-  display: flex;
-  flex-direction: column;
-}
-
-.kpi-value {
-  font-size: 18px;
-  font-weight: bold;
-  color: #7BD08D;
-  line-height: 1.2;
-}
-
-.kpi-label {
-  font-size: 11px;
-  color: #A9DBB5;
-  line-height: 1.2;
-}
-
-.latency-chart {
-  flex: 1;
-  min-height: 0; /* Crucial para que el gráfico no desborde */
-  background: rgba(0, 44, 27, 0.5);
+/* Contenedor para el gauge de CPU */
+.cpu-gauge-container {
+  flex: 1; 
+  min-height: 250px; /* Altura mínima para evitar que se achate */
+  background: rgba(0,44,27,0.5);
   border-radius: 10px;
-  border: 1px solid rgba(169, 219, 181, 0.1);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(169,219,181,0.1);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   overflow: hidden;
 }
 
-/* Panel derecho con grid de gráficos 2x2 */
+/* Derecha */
 .right-panel {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  gap: 10px;
+  gap: 16px;
   height: 100%;
-  min-height: 0; /* Importante para que el grid respete la altura */
 }
 
 .chart-card {
-  background: rgba(0, 44, 27, 0.5);
+  background: rgba(0,44,27,0.5);
   border-radius: 10px;
-  border: 1px solid rgba(169, 219, 181, 0.1);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(169,219,181,0.1);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   overflow: hidden;
-  min-height: 0; /* Crucial para que los gráficos no desborden */
+  min-height: 300px; /* Altura mínima para evitar que se achaten */
 }
 
-/* Media queries para responsive */
-@media (max-width: 1200px) {
-  .main-grid {
-    grid-template-columns: 240px 1fr;
+/* Responsive */
+@media (max-width: 992px) {
+  .main-grid { 
+    grid-template-columns: 1fr; 
+    grid-template-rows: auto auto; 
+  }
+  
+  .left-panel { 
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    height: auto;
+  }
+  
+  .kpi-column {
+    height: auto;
+    min-height: 350px; /* Altura mínima para evitar que se achaten */
+  }
+  
+  .cpu-gauge-container { 
+    height: auto;
+    min-height: 350px; /* Altura mínima para evitar que se achaten */
   }
 }
 
-@media (max-width: 992px) {
+@media (max-width: 768px) {
+  .dashboard-content {
+    --overflow: auto; /* Permitir scroll en móviles */
+  }
+  
+  .dashboard-container {
+    height: auto;
+    overflow: visible;
+    padding: 12px;
+  }
+  
   .main-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto 1fr;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: auto;
   }
   
   .left-panel {
-    flex-direction: row;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: auto;
   }
   
   .kpi-column {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    gap: 8px;
-    flex: 1;
-  }
-  
-  .latency-chart {
-    flex: 2;
-  }
-}
-
-@media (max-width: 768px) {
-  .dashboard-container {
+    gap: 12px;
     height: auto;
-    overflow: auto;
+    min-height: 200px;
   }
   
-  .main-grid {
-    height: auto;
-    grid-template-rows: auto auto;
+  .kpi-card {
+    min-height: 90px;
   }
   
-  .left-panel {
-    flex-direction: column;
-  }
-  
-  .kpi-column {
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, auto);
-  }
-  
-  .latency-chart {
-    height: 300px;
+  /* Aumentar significativamente la altura del gauge de CPU en móvil */
+  .cpu-gauge-container {
+    height: 400px;
+    min-height: 400px;
   }
   
   .right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: auto;
+  }
+  
+  /* Aumentar la altura de los gráficos para que no se corten */
+  .chart-card {
+    height: 450px;
+    min-height: 450px;
+    margin-bottom: 16px;
+  }
+  
+  /* Ajustes específicos para cada tipo de gráfico */
+  .errors-chart {
+    height: 450px;
+    min-height: 450px;
+  }
+  
+  .latency-chart {
+    height: 400px;
+    min-height: 400px;
+  }
+  
+  .spend-chart {
+    height: 500px;
+    min-height: 500px;
+  }
+  
+  .deploys-chart {
+    height: 450px;
+    min-height: 450px;
+  }
+}
+
+@media (max-width: 576px) {
+  .kpi-column {
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(4, 300px);
+    grid-template-rows: repeat(4, auto);
+    min-height: 400px;
+  }
+  
+  .kpi-card {
+    min-height: 90px;
+  }
+  
+  /* Aumentar aún más la altura del gauge de CPU en móviles pequeños */
+  .cpu-gauge-container {
+    height: 450px;
+    min-height: 450px;
+  }
+  
+  /* Aumentar aún más la altura de los gráficos en móviles pequeños */
+  .chart-card {
+    height: 500px;
+    min-height: 500px;
+    margin-bottom: 20px;
+  }
+  
+  /* Ajustes específicos para cada tipo de gráfico en móviles pequeños */
+  .errors-chart {
+    height: 500px;
+    min-height: 500px;
+  }
+  
+  .latency-chart {
+    height: 450px;
+    min-height: 450px;
+  }
+  
+  .spend-chart {
+    height: 550px;
+    min-height: 550px;
+  }
+  
+  .deploys-chart {
+    height: 500px;
+    min-height: 500px;
   }
 }
 </style>

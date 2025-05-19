@@ -163,7 +163,7 @@
   .chart-badge {
     background: rgba(123, 208, 141, 0.2);
     color: #7BD08D;
-    padding: 4px 8px;
+    padding: 3px 6px 3px 13px;
     border-radius: 16px;
     font-size: 12px;
     font-weight: 600;

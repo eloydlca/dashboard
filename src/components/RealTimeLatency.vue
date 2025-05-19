@@ -157,7 +157,7 @@
   .chart-badge {
     background: rgba(123, 208, 141, 0.2);
     color: #7BD08D;
-    padding: 3px 6px;
+    padding: 3px 6px 3px 14px;
     border-radius: 12px;
     font-size: 11px;
     font-weight: 600;
