@@ -153,15 +153,15 @@ const businessGoals = ref<SmartGoal[]>([
   },
   {
     id: 2,
-    title: 'Gasto promedio por usuario',
+    title: 'Jugadores Activos',
     description:
-      'Aumentar el gasto medio por jugador en la tienda in-app.',
+      'Incrementar el número de usuarios activos diarios en la aplicación para mejorar el engagement y retención.',
     smart: [
-      { letter: 'S', content: 'Elevar el gasto medio de 5 € a 15 €.' },
-      { letter: 'M', content: 'Valor medio de compras en el último mes.' },
-      { letter: 'A', content: 'Ofreciendo bundles de gemas y ofertas temporales.' },
-      { letter: 'R', content: 'Incrementa ingresos y LTV del usuario.' },
-      { letter: 'T', content: 'En el próximo mes.' }
+      { letter: 'S', content: 'Aumentar los DAU de 500 actuales a 800.' },
+      { letter: 'M', content: 'Contabilizado por usuarios que inician sesión al menos una vez al día.' },
+      { letter: 'A', content: 'Implementando notificaciones personalizadas y recompensas de login diario.' },
+      { letter: 'R', content: 'Clave para el crecimiento de la comunidad y retención.' },
+      { letter: 'T', content: 'En los próximos 4 semanas.' }
     ]
   },
   {

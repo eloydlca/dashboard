@@ -56,13 +56,13 @@
           <!-- Panel derecho: Grid de gráficos 2x2 -->
           <div class="right-panel">
             <div class="chart-card errors-chart">
-              <APIErrorsBar />
+              <APIErrorsScatter />
             </div>
             <div class="chart-card cpu-chart">
-              <CPUUsageArea />
+              <CPUUsageGauge />
             </div>
             <div class="chart-card spend-chart">
-              <AvgSpendMixed />
+              <UptimeMixed />
             </div>
             <div class="chart-card deploys-chart">
               <DeploysColumn />
@@ -77,9 +77,9 @@
 <script setup lang="ts">
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
 import { ref, onMounted } from 'vue';
-import APIErrorsBar from '@/components/APIErrorsBar.vue';
-import AvgSpendMixed from '@/components/AvgSpendMixed.vue';
-import CPUUsageArea from '@/components/CPUUsageArea.vue';
+import APIErrorsScatter from '@/components/APIErrorsScatter.vue';
+import UptimeMixed from '@/components/UptimeMixed.vue';
+import CPUUsageGauge from '@/components/CPUUsageGauge.vue';
 import DeploysColumn from '@/components/DeploysColumn.vue';
 import RealTimeLatency from '@/components/RealTimeLatency.vue';
 

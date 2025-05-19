@@ -2,10 +2,10 @@
   <div class="chart-wrapper">
     <div class="chart-header">
       <div>
-        <h2 class="chart-title">DAU/MAU Ratio</h2>
-        <p class="chart-subtitle">Engagement promedio de usuarios activos</p>
+        <h2 class="chart-title">Errores 500</h2>
+        <p class="chart-subtitle">Scatter Plot de errores por día</p>
       </div>
-      <div class="chart-badge">-12.5%</div>
+      <div class="chart-badge">-33%</div>
     </div>
     <div class="chart-content">
       <canvas ref="chartRef"></canvas>
@@ -14,52 +14,44 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { onMounted, ref, onBeforeUnmount } from 'vue';
 import {
   Chart,
-  BubbleController,
   CategoryScale,
   LinearScale,
   PointElement,
   Tooltip,
-  Legend
+  Legend,
+  ScatterController
 } from 'chart.js';
 
-Chart.register(
-  BubbleController,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  Tooltip,
-  Legend
-);
+Chart.register(CategoryScale, LinearScale, PointElement, Tooltip, Legend, ScatterController);
 
 const chartRef = ref(null);
 let chartInstance = null;
 
 onMounted(() => {
   const dataPoints = [
-    // x as category index, y as ratio, r as bubble radius
-    { x: 0, y: 0.22, r: 10 },
-    { x: 1, y: 0.25, r: 12 },
-    { x: 2, y: 0.27, r: 14 },
-    { x: 3, y: 0.26, r: 13 },
-    { x: 4, y: 0.29, r: 15 },
-    { x: 5, y: 0.32, r: 16 },
-    { x: 6, y: 0.28, r: 14 }
+    { x: 'Lun', y: 5 },
+    { x: 'Mar', y: 9 },
+    { x: 'Mié', y: 3 },
+    { x: 'Jue', y: 6 },
+    { x: 'Vie', y: 2 },
+    { x: 'Sáb', y: 1 },
+    { x: 'Dom', y: 0 }
   ];
 
   chartInstance = new Chart(chartRef.value.getContext('2d'), {
-    type: 'bubble',
+    type: 'scatter',
     data: {
-      datasets: [
-        {
-          label: 'DAU/MAU Ratio',
-          data: dataPoints,
-          backgroundColor: 'rgba(123, 208, 141, 0.7)',
-          borderColor: 'rgba(123, 208, 141, 1)'
-        }
-      ]
+      datasets: [{
+        label: 'Errores 500',
+        data: dataPoints,
+        backgroundColor: 'rgba(239, 68, 68, 0.7)',
+        borderColor: 'rgba(239, 68, 68, 1)',
+        pointRadius: 8,
+        hoverRadius: 10
+      }]
     },
     options: {
       responsive: true,
@@ -67,18 +59,13 @@ onMounted(() => {
       scales: {
         x: {
           type: 'category',
-          labels: ['Ene','Feb','Mar','Abr','May','Jun','Jul'],
+          labels: ['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'],
           ticks: { color: '#A9DBB5' },
           grid: { color: 'rgba(169, 219, 181, 0.1)' }
         },
         y: {
           beginAtZero: true,
-          min: 0,
-          max: 0.35,
-          ticks: {
-            callback: v => `${(v * 100).toFixed(0)}%`,
-            color: '#A9DBB5'
-          },
+          ticks: { stepSize: 1, color: '#A9DBB5' },
           grid: { color: 'rgba(169, 219, 181, 0.1)' }
         }
       },
@@ -91,10 +78,7 @@ onMounted(() => {
           borderColor: '#7BD08D',
           borderWidth: 1,
           callbacks: {
-            label: ctx => {
-              const v = ctx.raw;
-              return `Ratio: ${(v.y * 100).toFixed(1)}% — Usuarios: ${v.r * 10}`;
-            }
+            label: ctx => `Errores: ${ctx.parsed.y}`
           }
         }
       }
@@ -103,9 +87,7 @@ onMounted(() => {
 });
 
 onBeforeUnmount(() => {
-  if (chartInstance) {
-    chartInstance.destroy();
-  }
+  if (chartInstance) chartInstance.destroy();
 });
 </script>
 
@@ -134,8 +116,8 @@ onBeforeUnmount(() => {
   color: rgba(169, 219, 181, 0.7);
 }
 .chart-badge {
-  background: rgb(171, 79, 73);
-  color: #cfe2cc;
+  background: rgba(123, 208, 141, 0.2);
+  color: #7BD08D;
   padding: 4px 8px;
   border-radius: 16px;
   font-size: 12px;
@@ -144,5 +126,7 @@ onBeforeUnmount(() => {
 .chart-content {
   flex: 1;
   position: relative;
+  height: 300px;
+  min-height: 300px;
 }
 </style>
